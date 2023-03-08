@@ -10,15 +10,15 @@ package com.truongthikimhoa.services;
  */
 public class CalculatorServices {
     public static boolean isNguyenTo(int n) {
-        if (n < 0)
-            throw new ArithmeticException();
-        if ( n >= 2 ) {
-            for(int i = 2; i <= Math.sqrt(n); i++)
-                if(n % i == 0)
-                    return false;
-            return true;
+        if (n < 2) {
+            return false;
         }
-            
+        int squareRoot = (int) Math.sqrt(n);
+        for (int i = 2; i <= squareRoot; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
         return true;
         
     }

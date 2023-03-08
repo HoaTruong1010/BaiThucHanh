@@ -57,6 +57,16 @@ public class CategoryTester {
         List<String> names = cates.stream().flatMap(c -> Stream.of(c.getName())).collect(Collectors.toList());
         Set<String> testNames = new HashSet<>(names);
         
-        Assertions.a
+        Assertions.assertEquals(names.size(), testNames.size());
+    }
+    
+    @Test
+    public void test02() throws SQLException {
+        CategoryService s = new CategoryService();
+        List<Category> cates = s.getCategories();
+        
+        long t = cates.stream().filter(x -> x.getName() == null).count();
+        
+        Assertions.assertTrue(t == 0);
     }
 }
