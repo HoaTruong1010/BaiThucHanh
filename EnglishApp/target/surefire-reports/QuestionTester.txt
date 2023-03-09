@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: QuestionTester
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.295 s <<< FAILURE! - in QuestionTester
+testAddSuccess  Time elapsed: 0.011 s  <<< ERROR!
+java.lang.NullPointerException
+	at QuestionTester.testAddSuccess(QuestionTester.java:65)
+
