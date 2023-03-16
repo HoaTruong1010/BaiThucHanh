@@ -1,0 +1,4 @@
+--patch-module
+com.truongthikimhoa.englishapp=_
+--add-reads
+com.truongthikimhoa.englishapp=ALL-UNNAMED

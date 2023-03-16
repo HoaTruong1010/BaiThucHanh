@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,36 @@ public class QuestionService {
             
             conn.commit();
             return r > 0;
+        }
+    }
+    
+    public List<Question> getQuestions(String kw) throws SQLException {
+        List<Question> list = new ArrayList<>();
+        try (Connection conn = JDBCUtils.createConn()) {
+            String sql = "SELECT * FROM question";
+            if(kw!=null && !kw.isEmpty())
+                sql += " WHERE content like concat('%', ?, '%')";
+            
+            PreparedStatement stm = conn.prepareCall(sql);
+            if(kw!=null && !kw.isEmpty())
+                stm.setString(1, kw);
+            
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question quest = new Question(rs.getString("content"), rs.getInt("category_id"));
+                list.add(quest);
+            }
+        }
+        return list;
+    }
+    
+    public boolean deleteQuestion(String questionId) throws SQLException {
+        try (Connection conn = JDBCUtils.createConn()) {
+            String sql = "DELETE FROM question WHERE id= ?";
+            PreparedStatement stm = conn.prepareCall(sql);
+            stm.setString(1, questionId);
+            
+            return stm.executeUpdate() > 0;
         }
     }
 }

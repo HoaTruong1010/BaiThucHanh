@@ -77,4 +77,15 @@ public class QuestionTester {
             MessageBox.getBox("Question", "Add question fail!!!", Alert.AlertType.ERROR).show();
         }
     }
+    
+    @Test
+    public void testSearch() throws SQLException {
+        QuestionService s = new QuestionService();
+        List<Question> list = s.getQuestions("is");
+        
+        Assertions.assertTrue(!list.isEmpty());
+        
+        for (Question q: list)
+            Assertions.assertTrue(q.getContent().contains("is"));
+    }
 }
