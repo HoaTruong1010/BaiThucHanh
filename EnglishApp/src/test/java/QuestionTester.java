@@ -30,12 +30,14 @@ import org.junit.jupiter.api.Assertions;
  */
 public class QuestionTester {
     private static Connection conn;
+    private static QuestionService s;
     
     @BeforeAll
     public static void beforeALL() {
         try {
             Connection conn = JDBCUtils.createConn();
-                    } 
+            s = new QuestionService();
+        } 
         catch (SQLException ex) {
             Logger.getLogger(CategoryTester.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,9 +61,7 @@ public class QuestionTester {
         choices.add(new Choice("B", false, q.getId()));
         choices.add(new Choice("C", false, q.getId()));
         choices.add(new Choice("D", false, q.getId()));
-        
-        QuestionService s = new QuestionService();
-        
+                
         PreparedStatement stm = conn.prepareCall("SELECT * FROM question WHERE id = ?");
         stm.setString(1, q.getId());
         ResultSet r = stm.executeQuery();
@@ -80,12 +80,18 @@ public class QuestionTester {
     
     @Test
     public void testSearch() throws SQLException {
-        QuestionService s = new QuestionService();
         List<Question> list = s.getQuestions("is");
         
         Assertions.assertTrue(!list.isEmpty());
         
         for (Question q: list)
             Assertions.assertTrue(q.getContent().contains("is"));
+    }
+    
+    @Test
+    public void testDelete() throws SQLException {
+        String id = "a27a1a63-456d-49cb-a34e-88f1d11e6f74";
+        
+        boolean actual 
     }
 }
