@@ -4,7 +4,6 @@ com\truongthikimhoa\utils\MessageBox.class
 com\truongthikimhoa\pojo\Choice.class
 com\truongthikimhoa\services\QuestionService.class
 module-info.class
-com\truongthikimhoa\englishapp\PrimaryController.class
 com\truongthikimhoa\pojo\Question.class
 com\truongthikimhoa\englishapp\SecondaryController.class
 com\truongthikimhoa\pojo\Category.class

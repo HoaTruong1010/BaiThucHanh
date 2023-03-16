@@ -60,7 +60,8 @@ public class QuestionService {
             
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Question quest = new Question(rs.getString("content"), rs.getInt("category_id"));
+                Question quest = new Question(rs.getString("id"),
+                        rs.getString("content"), rs.getInt("category_id"));
                 list.add(quest);
             }
         }

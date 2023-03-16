@@ -77,6 +77,7 @@ public class PrimaryController implements Initializable{
         QuestionService s = new QuestionService();
         try {
             s.addQuestion(q, choices);
+            this.loadQuestions(null);
             MessageBox.getBox("Question", "Add question successful!!!", Alert.AlertType.INFORMATION).show();
         } catch (SQLException ex) {
             Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +101,23 @@ public class PrimaryController implements Initializable{
                 Alert confirm = MessageBox.getBox("Question", "Are you sure to delete?", Alert.AlertType.CONFIRMATION);
                 confirm.showAndWait().ifPresent(res -> {
                     if (res == ButtonType.OK) {
+                        Button b = (Button) evt.getSource();
+                        TableCell cell = (TableCell) b.getParent();
+                        Question q = (Question) cell.getTableRow().getItem();
                         
+                        QuestionService s = new QuestionService();
+                        try {
+                            if (s.deleteQuestion(q.getId()) == true) {
+                                MessageBox.getBox("Question", "Delete successful!", Alert.AlertType.INFORMATION).show();
+                                this.loadQuestions(null);
+                            }
+                            else
+                                MessageBox.getBox("Question", "Delete failed!", Alert.AlertType.INFORMATION).show();
+                                
+                        } catch (SQLException ex) {
+                            MessageBox.getBox("Question", "Delete failed!", Alert.AlertType.INFORMATION).show();
+                            Logger.getLogger(PrimaryController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 });
             });

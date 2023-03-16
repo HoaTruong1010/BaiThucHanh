@@ -26,9 +26,13 @@ public class Question {
         this.content = content;
         this.category_id = category_id;
     }
-    
-    
 
+    public Question(String id, String content, int category_id) {
+        this.id = id;
+        this.content = content;
+        this.category_id = category_id;
+    }
+    
     /**
      * @return the id
      */

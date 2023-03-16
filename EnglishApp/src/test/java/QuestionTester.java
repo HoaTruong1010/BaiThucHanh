@@ -35,12 +35,12 @@ public class QuestionTester {
     @BeforeAll
     public static void beforeALL() {
         try {
-            Connection conn = JDBCUtils.createConn();
-            s = new QuestionService();
+            conn = JDBCUtils.createConn();
         } 
         catch (SQLException ex) {
             Logger.getLogger(CategoryTester.class.getName()).log(Level.SEVERE, null, ex);
         }
+        s = new QuestionService();
     }
     
     @AfterAll
@@ -89,9 +89,23 @@ public class QuestionTester {
     }
     
     @Test
-    public void testDelete() throws SQLException {
-        String id = "a27a1a63-456d-49cb-a34e-88f1d11e6f74";
+    public void testDelete() {
+        String id = "fd9a8c35-f69a-4173-8f81-5cf9d3dedb2a";
         
-        boolean actual 
+        try {
+            boolean actual = s.deleteQuestion(id);
+            Assertions.assertTrue(actual);
+        
+            PreparedStatement stm = conn.prepareCall("SELECT * FROM question WHERE id = ?");
+            stm.setString(1, id);
+            ResultSet rs = stm.executeQuery();
+            Assertions.assertFalse(rs.next());
+
+            stm = conn.prepareCall("SELECT * FROM choice WHERE question_id = ?");
+            stm.setString(1, id);
+            Assertions.assertFalse(rs.next());
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionTester.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
